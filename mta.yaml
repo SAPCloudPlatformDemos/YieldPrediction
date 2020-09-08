@@ -1,0 +1,61 @@
+ID: mta_YieldPrediction
+_schema-version: '2.1'
+parameters:
+  deploy_mode: html5-repo
+version: 0.0.1
+modules:
+  - name: mta-yieldprediction-approuter
+    type: approuter.nodejs
+    path: mta-yieldprediction-approuter
+    parameters:
+      disk-quota: 256M
+      memory: 256M
+    requires:
+      - name: mta_YieldPrediction_html5_repo_runtime
+      - name: uaa_mta_YieldPrediction
+      - name: dest_mta_YieldPrediction
+  - name: mta_YieldPrediction_ui_deployer
+    type: com.sap.html5.application-content
+    path: mta_YieldPrediction_ui_deployer
+    requires:
+      - name: mta_YieldPrediction_html5_repo_host
+    build-parameters:
+      requires:
+        - name: YieldPrediction
+          artifacts:
+            - './*'
+          target-path: resources/YieldPrediction
+  - name: YieldPrediction
+    type: html5
+    path: YieldPrediction
+    build-parameters:
+      builder: custom
+      commands:
+        - npm install
+        - npm run build
+      supported-platforms: []
+      build-result: dist
+    requires: 
+      - name: dest_mta_YieldPrediction
+resources:
+  - name: mta_YieldPrediction_html5_repo_runtime
+    parameters:
+      service-plan: app-runtime
+      service: html5-apps-repo
+    type: org.cloudfoundry.managed-service
+  - name: mta_YieldPrediction_html5_repo_host
+    parameters:
+      service-plan: app-host
+      service: html5-apps-repo
+    type: org.cloudfoundry.managed-service
+  - name: uaa_mta_YieldPrediction
+    parameters:
+      path: ./xs-security.json
+      service-plan: application
+      service: xsuaa
+    type: org.cloudfoundry.managed-service
+  - name: dest_mta_YieldPrediction
+    parameters:
+      service-plan: lite
+      service: destination
+    type: org.cloudfoundry.managed-service

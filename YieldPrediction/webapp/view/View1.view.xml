@@ -1,0 +1,74 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:u="sap.ui.unified" controllerName="com.sap.YieldPrediction.controller.View1"
+	displayBlock="true">
+	<Shell id="shell">
+		<App id="app">
+			<pages>
+				<Page id="page" title="Read From Excel">
+					<customHeader>
+						<Bar>
+							<contentMiddle>
+								<Label text="Yield Prediction"/>
+							</contentMiddle>
+							<contentRight>
+								<u:FileUploader id="FileUploaderId" sameFilenameAllowed="true" iconOnly="false" buttonOnly="true" fileType="XLSX,xlsx,csv,CSV"
+									icon="sap-icon://upload" iconFirst="true" style="Emphasized" change="onUpload"/>
+							</contentRight>
+						</Bar>
+					</customHeader>
+					<content>
+						<Table id="predictionTable" items="{localModel>/items}" alternateRowColors="true" showOverlay="false">
+							<columns>
+								<Column><Label text="Farmer"/></Column>
+								<Column><Label text="Variety"/></Column>
+								<Column><Label text="Season"/></Column>
+								<Column><Label text="District"/></Column>
+								<Column><Label text="DAT_FertApp"/></Column>
+								<Column><Label text="N_kgpacre"/></Column>
+								<Column><Label text="P2O5_kgpacre"/></Column>
+								<Column><Label text="K2O_kgpacre"/></Column>
+								<Column><Label text="S_kgpacre"/></Column>
+								<Column><Label text="Tiller_perhill"/></Column>
+								<Column><Label text="Panicle_perhill"/></Column>
+								<Column><Label text="Paniclelength_cm"/></Column>
+								<Column><Label text="Grains_perpanicle"/></Column>
+								<Column><Label text="Chaffygrains_pc"/></Column>
+								<Column><Label text="grain1000weight_g"/></Column>
+								<Column><Label text="Yield_qperacre"/></Column>
+								<Column><Label text="Yield_prediction"/></Column>
+							</columns>
+							<items>
+								<ColumnListItem>
+									<cells>
+										<Text text="{localModel>Farmer}"/>
+										<Text text="{localModel>Variety}"/>
+										<Text text="{localModel>Season}"/>
+										<Text text="{localModel>District}"/>
+										<Text text="{localModel>DAT_FertApp}"/>
+										<Text text="{localModel>N_kgpacre}"/>
+										<Text text="{localModel>P2O5_kgpacre}"/>
+										<Text text="{localModel>K2O_kgpacre}"/>
+										<Text text="{localModel>S_kgpacre}"/>
+										<Text text="{localModel>Tiller_perhill}"/>
+										<Text text="{localModel>Panicle_perhill}"/>
+										<Text text="{localModel>Paniclelength_cm}"/>
+										<Text text="{localModel>Grains_perpanicle}"/>
+										<Text text="{localModel>Chaffygrains_pc}"/>
+										<Text text="{localModel>grain1000weight_g}"/>
+										<Text text="{localModel>Yield_qperacre}"/>
+										<Text text="{parts: ['localModel>serialNumber'], formatter: '.calculateYieldPrediction'}"/>
+									</cells>
+								</ColumnListItem>
+							</items>
+						</Table>
+					</content>
+					<footer>
+						<OverflowToolbar>
+							<ToolbarSpacer/>
+							<Button icon="sap-icon://download" text="Download" press="onDataExport" id="download"></Button>
+						</OverflowToolbar>
+					</footer>
+				</Page>
+			</pages>
+		</App>
+	</Shell>
+</mvc:View>
